@@ -24,7 +24,7 @@ def post_user_content(user_id):
 
 def log_in_user():
     username = input("Username: ")
-    password = input("password: ")
+    password = input("Password: ")
     conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
     cursor = conn.cursor()
     cursor.execute('CALL select_user_id(?,?)', [username, password])
@@ -36,7 +36,9 @@ def log_in_user():
         for id in result:
             return id[0]
     else:
-        return None
+        print("Your username or password is incorrect. Try again.")
+        return
+
 
 def get_user_selection():
     print("\n1. Insert a post?")
@@ -48,6 +50,8 @@ def get_user_selection():
 
 def run_app():
     user_id = log_in_user()
+    if(user_id == None):
+        run_app()
     while(True):
         user_selection = get_user_selection()
         if(user_selection == "1"):
@@ -58,7 +62,6 @@ def run_app():
             return
         else:
             print("You must type only numbers between 1, 2 or 3.")
-            get_user_selection()
 
 
 run_app()

@@ -8,3 +8,5 @@ values (1, 'Making my first post.', 'First'), (1, 'Making my second post.', 'Sec
 call select_user_id('gabriel', '123');
 
 call add_post_user(1, 'testing content', 'testing title');
+
+call get_all_posts();
