@@ -6,3 +6,5 @@ values (1, 'Making my first post.', 'First'), (1, 'Making my second post.', 'Sec
 (2, 'Making the fourth.', 'Fourth'), (3, 'Au au au au', 'Au'), (3, 'Rughw rughw', 'Rughw');
 
 call select_user_id('gabriel', '123');
+
+call add_post_user(1, 'testing content', 'testing title');
