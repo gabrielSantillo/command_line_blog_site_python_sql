@@ -3,7 +3,10 @@ import mariadb
 
 
 def get_all_posts():
-    conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+    try:
+        conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+    except:
+        print("Something went wrong. The appropriate person has been notified.")
     cursor = conn.cursor()
     cursor.execute('CALL get_all_posts()')
     result = cursor.fetchall()
@@ -16,7 +19,10 @@ def get_all_posts():
 def post_user_content(user_id):
     content = input("Type your content:\n")
     title = input("Type your title:\n")
-    conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+    try:
+        conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+    except:
+        print("Something went wrong. The appropriate person has been notified.")
     cursor = conn.cursor()
     cursor.execute('CALL add_post_user(?,?,?)', [user_id, content, title])
     cursor.close()
@@ -25,7 +31,10 @@ def post_user_content(user_id):
 def log_in_user():
     username = input("Username: ")
     password = input("Password: ")
-    conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+    try:
+        conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+    except:
+        print("Something went wrong. The appropriate person has been notified.")
     cursor = conn.cursor()
     cursor.execute('CALL select_user_id(?,?)', [username, password])
     result = cursor.fetchall()
