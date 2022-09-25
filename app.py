@@ -11,7 +11,7 @@ def get_all_posts():
     conn.close()
 
     for post in result:
-        print("\n",post[0], post[1],)
+        print("\n",post[0], post[1],"\n")
 
 def post_user_content(user_id):
     content = input("Type your content:\n")
@@ -39,23 +39,22 @@ def log_in_user():
         return None
 
 def get_user_selection():
-    print("1. Insert a post?")
+    print("\n1. Insert a post?")
     print("2. Read all posts?")
     print("3. Quit?")
-    user_selection = input("Chose between 1, 2 or 3.")
+    user_selection = input("Chose between 1, 2 or 3.\n")
     return user_selection
 
 
 def run_app():
+    user_id = log_in_user()
     while(True):
-        user_id = log_in_user()
         user_selection = get_user_selection()
         if(user_selection == "1"):
             post_user_content(user_id)
         elif(user_selection == "2"):
             get_all_posts()
         elif(user_selection == "3"):
-            print("Bye.")
             return
         else:
             print("You must type only numbers between 1, 2 or 3.")
