@@ -10,3 +10,7 @@ call select_user_id('gabriel', '123');
 call add_post_user(1, 'testing content', 'testing title');
 
 call get_all_posts();
+
+call get_post_by_id(2);
+
+call get_all_usernames();
