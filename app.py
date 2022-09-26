@@ -54,8 +54,9 @@ def get_user_selection():
     print("2. Read all posts?")
     print("3. Read only your posts?")
     print("4. See all usernames?")
-    print("5. Quit?")
-    user_selection = input("Chose between 1, 2, 3, 4 or 5.\n")
+    print("5. Wanna see posts based in a username?")
+    print("6. Quit?")
+    user_selection = input("Chose between 1, 2, 3, 4, 5 or 6.\n")
     return user_selection
 
 def get_user_post(user_id):
@@ -86,6 +87,21 @@ def get_all_usernames():
     for post in result:
         print("\n",post[0],"\n")
 
+def get_post_by_username():
+    username = input("What is the username you want see the posts?\n")
+    try:
+        conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+    except:
+        print("Something went wrong. The appropriate person has been notified.")
+    cursor = conn.cursor()
+    cursor.execute('CALL get_post_by_username(?)', [username])
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    for post in result:
+        print("\n",post[0], post[1],"\n")
+
 
 def run_app():
     user_id = log_in_user()
@@ -102,9 +118,11 @@ def run_app():
         elif(user_selection == "4"):
             get_all_usernames()
         elif(user_selection == "5"):
+            get_post_by_username()
+        elif(user_selection == "6"):
             return
         else:
-            print("You must type only numbers between 1, 2, 3 or 4.")
+            print("You must type only numbers between 1, 2, 3, 4, 5 or 6.")
 
 
 run_app()
