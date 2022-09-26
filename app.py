@@ -52,9 +52,24 @@ def log_in_user():
 def get_user_selection():
     print("\n1. Insert a post?")
     print("2. Read all posts?")
-    print("3. Quit?")
+    print("3. Read only your posts?")
+    print("4. Quit?")
     user_selection = input("Chose between 1, 2 or 3.\n")
     return user_selection
+
+def get_user_post(user_id):
+    try:
+        conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+    except:
+        print("Something went wrong. The appropriate person has been notified.")
+    cursor = conn.cursor()
+    cursor.execute('CALL get_post_by_id(?)', [user_id])
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    for post in result:
+        print("\n",post[0], post[1],"\n")
 
 
 def run_app():
@@ -68,9 +83,11 @@ def run_app():
         elif(user_selection == "2"):
             get_all_posts()
         elif(user_selection == "3"):
+            get_user_post(user_id)
+        elif(user_selection == "4"):
             return
         else:
-            print("You must type only numbers between 1, 2 or 3.")
+            print("You must type only numbers between 1, 2, 3 or 4.")
 
 
 run_app()
