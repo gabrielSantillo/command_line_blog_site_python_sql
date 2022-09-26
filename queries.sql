@@ -14,3 +14,5 @@ call get_all_posts();
 call get_post_by_id(2);
 
 call get_all_usernames();
+
+call get_post_by_username('gabriel');
