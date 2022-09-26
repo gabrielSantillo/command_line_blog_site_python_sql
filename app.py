@@ -99,8 +99,11 @@ def get_post_by_username():
     cursor.close()
     conn.close()
 
-    for post in result:
-        print("\n",post[0], post[1],"\n")
+    if(len(result) >= 1):
+        for post in result:
+            print("\n",post[0], post[1],"\n")
+    else:
+        print("This username is wrong or doesn't exist. Try again.")
 
 
 def run_app():
