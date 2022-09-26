@@ -6,18 +6,19 @@ def get_all_posts():
     # trying to connect to the db
     try:
         conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
-    # if some exception occurs print this message
+        # this cursor function pass our calls to mariadb and get the results
+        cursor = conn.cursor()
+        # calling the function that is in our db
+        cursor.execute('CALL get_all_posts()')
+        # getting the results of our query
+        result = cursor.fetchall()
+        # closing our connection to the db
+        cursor.close()
+        conn.close()
+
+        # if some exception occurs print this message
     except:
         print("Something went wrong. The appropriate person has been notified.")
-    # this cursor function pass our calls to mariadb and get the results
-    cursor = conn.cursor()
-    # calling the function that is in our db
-    cursor.execute('CALL get_all_posts()')
-    # getting the results of our query
-    result = cursor.fetchall()
-    # closing our connection to the db
-    cursor.close()
-    conn.close()
 
     for post in result:
         print("\n",post[0], post[1],"\n")
@@ -31,16 +32,17 @@ def post_user_content(user_id):
     # trying to connect to the db
     try:
         conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
-    # if some exception occurs print this message
+        # this cursor function pass our calls to mariadb and get the results
+        cursor = conn.cursor()
+        # calling the function that is in our db and sending 3 arguments
+        cursor.execute('CALL add_post_user(?,?,?)', [user_id, content, title])
+        # closing our connection to the db
+        cursor.close()
+        conn.close()
+        # if some exception occurs print this message
     except:
         print("Something went wrong. The appropriate person has been notified.")
     # this cursor function pass our calls to mariadb and get the results
-    cursor = conn.cursor()
-    # calling the function that is in our db and sending 3 arguments
-    cursor.execute('CALL add_post_user(?,?,?)', [user_id, content, title])
-    # closing our connection to the db
-    cursor.close()
-    conn.close()
 
 # this function make the connection to the db and log the user in
 def log_in_user():
@@ -51,18 +53,19 @@ def log_in_user():
     # trying to connect to the db
     try:
         conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+        # this cursor function pass our calls to mariadb and get the results
+        cursor = conn.cursor()
+        # calling the function that is in our db and sending 2 arguments
+        cursor.execute('CALL select_user_id(?,?)', [username, password])
+        # getting the results of our query
+        result = cursor.fetchall()
+        # closing our connection to the db
+        cursor.close()
+        conn.close()
     # if some exception occurs print this message
     except:
         print("Something went wrong. The appropriate person has been notified.")
-    # this cursor function pass our calls to mariadb and get the results
-    cursor = conn.cursor()
-    # calling the function that is in our db and sending 2 arguments
-    cursor.execute('CALL select_user_id(?,?)', [username, password])
-    # getting the results of our query
-    result = cursor.fetchall()
-    # closing our connection to the db
-    cursor.close()
-    conn.close()
+
 
     # checking if the result lenght is equal to one, which it has content inside
     if(len(result) == 1):
@@ -91,18 +94,19 @@ def get_user_post(user_id):
     # trying to connect to the db
     try:
         conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+        # this cursor function pass our calls to mariadb and get the results
+        cursor = conn.cursor()
+        # calling the function that is in our db and sending 1 arguments
+        cursor.execute('CALL get_post_by_id(?)', [user_id])
+        # getting the results of our query
+        result = cursor.fetchall()
+        # closing our connection to the db  
+        cursor.close()
+        conn.close()
     # if some exception occurs print this message
     except:
         print("Something went wrong. The appropriate person has been notified.")
-    # this cursor function pass our calls to mariadb and get the results
-    cursor = conn.cursor()
-    # calling the function that is in our db and sending 1 arguments
-    cursor.execute('CALL get_post_by_id(?)', [user_id])
-    # getting the results of our query
-    result = cursor.fetchall()
-    # closing our connection to the db  
-    cursor.close()
-    conn.close()
+
     # looping the results and printing its content and title
     for post in result:
         print("\n",post[0], post[1],"\n")
@@ -112,18 +116,19 @@ def get_all_usernames():
     # trying to connect to the db
     try:
         conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+        # this cursor function pass our calls to mariadb and get the results
+        cursor = conn.cursor()
+        # calling the function that is in our db
+        cursor.execute('CALL get_all_usernames()')
+        # getting the results of our query
+        result = cursor.fetchall()
+        # closing our connection to the db 
+        cursor.close()
+        conn.close()
     # if some exception occurs print this message
     except:
         print("Something went wrong. The appropriate person has been notified.")
-    # this cursor function pass our calls to mariadb and get the results
-    cursor = conn.cursor()
-    # calling the function that is in our db
-    cursor.execute('CALL get_all_usernames()')
-    # getting the results of our query
-    result = cursor.fetchall()
-    # closing our connection to the db 
-    cursor.close()
-    conn.close()
+
 
     # looping the results and printing all usernames
     for post in result:
@@ -136,18 +141,19 @@ def get_post_by_username():
     # trying to connect to the db
     try:
         conn = mariadb.connect(password=dbcreds.pasword, user=dbcreds.user, host=dbcreds.host, port=dbcreds.port, database=dbcreds.database)
+        # this cursor function pass our calls to mariadb and get the results
+        cursor = conn.cursor()
+        # calling the function that is in our db and sending 1 arguments
+        cursor.execute('CALL get_post_by_username(?)', [username])
+        # getting the results of our query
+        result = cursor.fetchall()
+        # closing our connection to the db 
+        cursor.close()
+        conn.close()
     # if some exception occurs print this message
     except:
         print("Something went wrong. The appropriate person has been notified.")
-    # this cursor function pass our calls to mariadb and get the results
-    cursor = conn.cursor()
-    # calling the function that is in our db and sending 1 arguments
-    cursor.execute('CALL get_post_by_username(?)', [username])
-    # getting the results of our query
-    result = cursor.fetchall()
-    # closing our connection to the db 
-    cursor.close()
-    conn.close()
+
 
     # checking if the result has a lenght of at least 1
     if(len(result) >= 1):
